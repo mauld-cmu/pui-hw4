@@ -8,61 +8,71 @@ class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rollData: [
+      rolls: [
         {
           name: "original",
           displayName: "Original cinnamon roll",
           imageURL: "/assets/original-cinnamon-roll.jpg",
           imageAlt: "Photo of original flavor cinnamon roll",
-          price: 2.49,
+          basePrice: 2.49,
         },
         {
           name: "apple",
           displayName: "Apple cinnamon roll",
           imageURL: "/assets/apple-cinnamon-roll.jpg",
           imageAlt: "Photo of apple flavored cinnamon roll",
-          price: 3.49,
+          basePrice: 3.49,
         },
         {
           name: "raisin",
           displayName: "Raisin cinnamon roll",
           imageURL: "/assets/raisin-cinnamon-roll.jpg",
           imageAlt: "Photo of raisin flavored cinnamon roll",
-          price: 2.99,
+          basePrice: 2.99,
         },
         {
           name: "walnut",
           displayName: "Walnut cinnamon roll",
           imageURL: "/assets/walnut-cinnamon-roll.jpg",
           imageAlt: "Photo of walnut flavored cinnamon roll",
-          price: 3.49,
+          basePrice: 3.49,
         },
         {
           name: "chocolate",
           displayName: "Double-chocolate cinnamon roll",
           imageURL: "/assets/double-chocolate-cinnamon-roll.jpg",
           imageAlt: "Photo of double chocolate flavored cinnamon roll",
-          price: 3.99,
+          basePrice: 3.99,
         },
         {
           name: "strawberry",
           displayName: "Strawberry cinnamon roll",
           imageURL: "/assets/strawberry-cinnamon-roll.jpg",
           imageAlt: "Photo of Strawberry flavored cinnamon roll",
-          price: 3.99,
+          basePrice: 3.99,
         }
       ]
     };
   }
+
+  priceFormatter(unformattedPrice) {
+    let formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+    return formatter.format(unformattedPrice);
+  }
+
   render() { 
-    // Loops through the rollData list, passes props to Roll Components
-    const gridItems = this.state.rollData.map((item) =>
+    // Loops through the rolls list, passes props to Roll Components
+    const gridItems = this.state.rolls.map((item) =>
       <Roll
         key={item.name}
         displayName={item.displayName}
         imageURL={item.imageURL}
         imageAlt={item.imageAlt}
-        price={item.price}
+        basePrice={item.basePrice}
+        priceFormatter={this.priceFormatter}
       />
     );
     return (
