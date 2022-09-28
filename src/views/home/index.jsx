@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import './Homepage.css';
 import logo from './logo-01.svg';
 import NavBar from '../../components/NavBar';
-import ItemCard from '../../components/ItemCard';
+import Roll from '../../components/Roll';
 
 class Homepage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemCardData: [
+      rollData: [
         {
           name: "original",
           displayName: "Original cinnamon roll",
@@ -55,9 +55,9 @@ class Homepage extends Component {
     };
   }
   render() { 
-    // Loops through the itemCardData list, passes props to ItemCard Components
-    const gridItems = this.state.itemCardData.map((item) =>
-      <ItemCard
+    // Loops through the rollData list, passes props to Roll Components
+    const gridItems = this.state.rollData.map((item) =>
+      <Roll
         key={item.name}
         displayName={item.displayName}
         imageURL={item.imageURL}
