@@ -4,6 +4,7 @@ import logo from './logo-01.svg';
 import NavBar from '../../components/NavBar';
 import Roll from '../../components/Roll';
 
+//Contains all the data needed to populate Roll grid
 const rollData = {
   "original": {
     displayName: "Original cinnamon roll",
@@ -108,13 +109,17 @@ class Homepage extends Component {
       cartTotal: "Total: $0.00",
       showCartPopup: false
     };
+    // For Roll
     this.addToCart = this.addToCart.bind(this);
     this.createRoll = this.createRoll.bind(this);
+    // For NavBar
     this.displayCartAmount = this.displayCartAmount.bind(this);
     this.displayCartTotal = this.displayCartTotal.bind(this);
+    // For CartPopup
     this.closePopup = this.closePopup.bind(this);
   }
 
+  // Formats Floats into USD
   priceFormatter(unformattedPrice) {
     let formatter = new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -123,10 +128,12 @@ class Homepage extends Component {
     return formatter.format(unformattedPrice);
   }
 
+  // Creates a Roll Object given parameters, as to not have to define in children
   createRoll(name, glaze, packSize) {
     return new RollObj(name, glaze, packSize);
   }
 
+  // Adds to cart list, triggers popup, and updates states for Nav Bar
   addToCart(incomingRoll) {
     this.state.cart.push(incomingRoll);
     this.setState({
@@ -145,20 +152,23 @@ class Homepage extends Component {
     setTimeout(this.closePopup, 3000);
   }
 
+  // Closes popup after 3 seconds
   closePopup() {
     this.setState({
       showCartPopup: false
     })
   }
 
+  // Creates a string displaying how many Rolls are in the cart array
   displayCartAmount() {
-    if (this.state.cart.length == 0 || this.state.cart.length > 1) {
+    if (this.state.cart.length === 0 || this.state.cart.length > 1) {
       return this.state.cart.length + " items";
     } else {
       return this.state.cart.length + " item";
     }
   }
 
+   // Creates a string displaying how much Rolls are in the cart array cost
   displayCartTotal() {
     let totalPrice = this.state.cart.reduce((sum, roll) => {
       return sum + roll.price;

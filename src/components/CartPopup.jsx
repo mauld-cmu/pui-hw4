@@ -10,6 +10,7 @@ class CartPopup extends Component {
   }
 
   render() {
+    // Conditional Rendering
     if (!this.props.showCartPopup) {
       return null;
     }

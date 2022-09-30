@@ -9,6 +9,7 @@ class Roll extends Component {
     };
   }
 
+  // Gets data from the forms, creates a roll Object and updates state
   pullFormData = (event) => {
     if (event.target.type === 'radio') {
       this.setState(prevState => ({
@@ -22,6 +23,7 @@ class Roll extends Component {
     }
   }
 
+  // Tells the parent to add the Roll Component's Roll to the cart
   addToParentCart = (event) => {
     this.props.addToCart(this.state.targetRoll);
   }
