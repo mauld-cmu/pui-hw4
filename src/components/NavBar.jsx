@@ -20,7 +20,11 @@ class NavBar extends Component {
           <span>CART</span>
           <p id="cart-count">{this.props.cartAmount}</p>
           <p id="cart-price">{this.props.cartTotal}</p>
-          <CartPopup />
+          <CartPopup 
+            currentRoll={this.props.currentRoll}
+            priceFormatter={this.props.priceFormatter}
+            showCartPopup={this.props.showCartPopup}
+          />
         </div>
       </nav>
     );

@@ -86,10 +86,13 @@ class RollObj {
   constructor(name, glaze, packSize) {
     // types can be "original", "apple", "raisin", "walnut", "chocolate", or "strawberry"
     this.name = name;
+    this.displayName = rollData[this.name].displayName;
     // glazing can be "keepOriginal", "sugarMilk", "vanillaMilk", "doubleChocolate"
     this.glaze = glaze;
+    this.glazeName = glazingData[this.glaze].displayName;
     // packSize can be "onePack", "threePack", "sixPack", or "twelvePack"
     this.packSize = packSize;
+    this.packSizeName = packData[this.packSize].displayNumber;
     // calculates price 
     this.price = (rollData[this.name].basePrice + glazingData[this.glaze].price) * packData[this.packSize].priceMultiplier;
   }
@@ -102,12 +105,14 @@ class Homepage extends Component {
       currentRoll: new RollObj('original', 'keepOriginal', 'onePack'),
       cart: [],
       cartAmount: "0 items",
-      cartTotal: "Total: $0.00"
+      cartTotal: "Total: $0.00",
+      showCartPopup: false
     };
     this.addToCart = this.addToCart.bind(this);
     this.createRoll = this.createRoll.bind(this);
     this.displayCartAmount = this.displayCartAmount.bind(this);
     this.displayCartTotal = this.displayCartTotal.bind(this);
+    this.closePopup = this.closePopup.bind(this);
   }
 
   priceFormatter(unformattedPrice) {
@@ -123,13 +128,26 @@ class Homepage extends Component {
   }
 
   addToCart(incomingRoll) {
-    console.log(incomingRoll);
     this.state.cart.push(incomingRoll);
     this.setState({
+      currentRoll: incomingRoll
+    });
+    this.setState({
+      showCartPopup: true
+    });
+    this.setState({
       cartAmount: this.displayCartAmount()
-    })
+    });
     this.setState({
       cartTotal: this.displayCartTotal()
+    });
+    
+    setTimeout(this.closePopup, 3000);
+  }
+
+  closePopup() {
+    this.setState({
+      showCartPopup: false
     })
   }
 
@@ -172,6 +190,9 @@ class Homepage extends Component {
             <NavBar 
               cartAmount={this.state.cartAmount}
               cartTotal={this.state.cartTotal}
+              currentRoll={this.state.currentRoll}
+              priceFormatter={this.priceFormatter}
+              showCartPopup={this.state.showCartPopup}
             />
             <hr/>
             <h1>Our hand-made cinnamon rolls</h1>
