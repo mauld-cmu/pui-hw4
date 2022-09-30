@@ -23,7 +23,6 @@ class Roll extends Component {
   }
 
   addToParentCart = (event) => {
-    // this.props.updateCurrentRoll(this.state.targetRoll);
     this.props.addToCart(this.state.targetRoll);
   }
 

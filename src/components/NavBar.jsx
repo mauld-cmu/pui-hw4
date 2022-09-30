@@ -3,8 +3,14 @@ import './NavBar.css';
 import CartPopup from './CartPopup';
 
 class NavBar extends Component {
-  //state = {  } 
-  render() { 
+  constructor(props) {
+    super(props);
+    this.state = {
+      
+    };
+  }
+
+  render() {
     return (
       <nav>
         <div id="products-nav">
@@ -12,13 +18,14 @@ class NavBar extends Component {
         </div>
         <div id="cart-nav">
           <span>CART</span>
-          <p id="cart-count">0 items</p>
-          <p id="cart-price">Total: $0.00</p>
-          <CartPopup/>
+          <p id="cart-count">{this.props.cartAmount}</p>
+          <p id="cart-price">{this.props.cartTotal}</p>
+          <CartPopup />
         </div>
       </nav>
     );
   }
+  
 }
- 
+
 export default NavBar;

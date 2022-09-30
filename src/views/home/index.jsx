@@ -100,11 +100,14 @@ class Homepage extends Component {
     super(props);
     this.state = {
       currentRoll: new RollObj('original', 'keepOriginal', 'onePack'),
-      cart: []
+      cart: [],
+      cartAmount: "0 items",
+      cartTotal: "Total: $0.00"
     };
     this.addToCart = this.addToCart.bind(this);
-    this.updateCurrentRoll = this.updateCurrentRoll.bind(this);
     this.createRoll = this.createRoll.bind(this);
+    this.displayCartAmount = this.displayCartAmount.bind(this);
+    this.displayCartTotal = this.displayCartTotal.bind(this);
   }
 
   priceFormatter(unformattedPrice) {
@@ -119,17 +122,30 @@ class Homepage extends Component {
     return new RollObj(name, glaze, packSize);
   }
 
-  updateCurrentRoll(newRoll) {
-    this.setState(prevState => ({
-      ...prevState,
-      currentRoll: newRoll
-    }));
+  addToCart(incomingRoll) {
+    console.log(incomingRoll);
+    this.state.cart.push(incomingRoll);
+    this.setState({
+      cartAmount: this.displayCartAmount()
+    })
+    this.setState({
+      cartTotal: this.displayCartTotal()
+    })
   }
 
-  addToCart(incomingRoll) {
-    console.log("Adding to Cart:");
-    console.log(incomingRoll);
-    this.updateCurrentRoll(incomingRoll);
+  displayCartAmount() {
+    if (this.state.cart.length == 0 || this.state.cart.length > 1) {
+      return this.state.cart.length + " items";
+    } else {
+      return this.state.cart.length + " item";
+    }
+  }
+
+  displayCartTotal() {
+    let totalPrice = this.state.cart.reduce((sum, roll) => {
+      return sum + roll.price;
+    }, 0);
+    return "Total: " + this.priceFormatter(totalPrice);
   }
 
   render() { 
@@ -142,10 +158,8 @@ class Homepage extends Component {
           key={key}
           rollKey={key}
           rollDatum={rollData[key]}
-          currentRoll={this.state.currentRoll}
           priceFormatter={this.priceFormatter}
           createRoll={this.createRoll}
-          updateCurrentRoll={this.updateCurrentRoll}
           addToCart={this.addToCart}
         />
       );
@@ -155,7 +169,10 @@ class Homepage extends Component {
         <header>
           <img id="logo" src={logo} alt="Bun Bun Bake Shop logo with text" width="400" />
           <div id="header-text">
-            <NavBar/>
+            <NavBar 
+              cartAmount={this.state.cartAmount}
+              cartTotal={this.state.cartTotal}
+            />
             <hr/>
             <h1>Our hand-made cinnamon rolls</h1>
           </div>
