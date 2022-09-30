@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/pui-hw4/static/css/main.5b98f6ed.css",
-    "main.js": "/pui-hw4/static/js/main.34228cc6.js",
+    "main.css": "/pui-hw4/static/css/main.1840aedd.css",
+    "main.js": "/pui-hw4/static/js/main.75fdaf71.js",
     "static/js/787.d9fef60d.chunk.js": "/pui-hw4/static/js/787.d9fef60d.chunk.js",
     "static/media/logo-01.svg": "/pui-hw4/static/media/logo-01.b2f9cdda6d5cda1ce2ffc47e6b747dd4.svg",
     "index.html": "/pui-hw4/index.html",
-    "main.5b98f6ed.css.map": "/pui-hw4/static/css/main.5b98f6ed.css.map",
-    "main.34228cc6.js.map": "/pui-hw4/static/js/main.34228cc6.js.map",
+    "main.1840aedd.css.map": "/pui-hw4/static/css/main.1840aedd.css.map",
+    "main.75fdaf71.js.map": "/pui-hw4/static/js/main.75fdaf71.js.map",
     "787.d9fef60d.chunk.js.map": "/pui-hw4/static/js/787.d9fef60d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b98f6ed.css",
-    "static/js/main.34228cc6.js"
+    "static/css/main.1840aedd.css",
+    "static/js/main.75fdaf71.js"
   ]
 }
