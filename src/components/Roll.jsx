@@ -1,89 +1,37 @@
 import React, { Component } from 'react';
 import './Roll.css';
 
-const glazing = {
-  "keepOriginal": {
-    price: 0.00,
-    displayName: "Keep original"
-  },
-  "sugarMilk": {
-    price: 0.00,
-    displayName: "Sugar milk"
-  },
-  "vanillaMilk": {
-    price: 0.50,
-    displayName: "Vanilla milk"
-  },
-  "doubleChocolate": {
-    price: 1.50,
-    displayName: "Double chocolate"
-  }
-}
-
-const pack = {
-  "onePack": {
-    priceMultiplier: 1,
-    displayNumber: 1
-  },
-  "threePack": {
-    priceMultiplier: 3,
-    displayNumber: 3
-  },
-  "sixPack": {
-    priceMultiplier: 5,
-    displayNumber: 6
-  },
-  "twelvePack": {
-    priceMultiplier: 10,
-    displayNumber: 12
-  }
-}
-
-/*
-  ItemCard props are: 
-  name: String,
-  displayName: String,
-  imageURL: String,
-  imageAlt: String,
-  basePrice: number,
-*/
 class Roll extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPrice: this.props.priceFormatter(this.props.basePrice),
-      currentGlazing: 'keepOriginal',
-      currentPackSize: 1
+      targetRoll: this.props.createRoll(this.props.rollKey, 'keepOriginal', 'onePack')
     };
-  }
-
-  setPrice() {
-    this.setState((state, props) => ({
-      currentPrice: props.priceFormatter((props.basePrice + glazing[state.currentGlazing].price) * pack[state.currentPackSize].priceMultiplier)
-    }));
   }
 
   pullFormData = (event) => {
     if (event.target.type === 'radio') {
       this.setState(prevState => ({
-        ...prevState,
-        currentPackSize: event.target.value
+        targetRoll: this.props.createRoll(prevState.targetRoll.name, prevState.targetRoll.glaze, event.target.value)
       }))
     }
     if (event.target.type === 'select-one') {
       this.setState(prevState => ({
-        ...prevState,
-        currentGlazing: event.target.value
+        targetRoll: this.props.createRoll(prevState.targetRoll.name, event.target.value, prevState.targetRoll.packSize)
       }))
     }
-    this.setPrice();
+  }
+
+  addToParentCart = (event) => {
+    // this.props.updateCurrentRoll(this.state.targetRoll);
+    this.props.addToCart(this.state.targetRoll);
   }
 
   render() { 
     return (
       <article className="product-card">
-        <img className="product" src={process.env.PUBLIC_URL + this.props.imageURL} alt={this.props.imageAlt} width="280"/>
-        <h3>{this.props.displayName}</h3>
+        <img className="product" src={process.env.PUBLIC_URL + this.props.rollDatum.imageURL} alt={this.props.rollDatum.imageAlt} width="280"/>
+        <h3>{this.props.rollDatum.displayName}</h3>
 
         <form onChange={this.pullFormData}>
           <div className="row-glazing">
@@ -120,8 +68,8 @@ class Roll extends Component {
         </form>
 
         <div className="row-cart">
-          <span id="price">{this.state.currentPrice}</span>
-          <button>Add to Cart</button>
+          <span id="price">{this.props.priceFormatter(this.state.targetRoll.price)}</span>
+          <button onClick={this.addToParentCart}>Add to Cart</button>
         </div>
       </article>
     );
